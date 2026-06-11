@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Институт Психологии | Профессиональное обучение</title>
+    <style>
+        /* Базовые настройки и переменные (Теплая коричневая схема) */
+        :root {
+            --primary-dark: #3E2723; /* Темно-коричневый (текст, хедер) */
+            --primary: #5D4037;      /* Основной коричневый */
+            --primary-light: #8D6E63; /* Светло-коричневый (ховеры) */
+            --accent: #D7CCC8;       /* Теплый акцент (фоны карточек) */
+            --bg-color: #EFEBE9;     /* Теплый белый (общий фон) */
+            --white: #FFFFFF;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Плавная прокрутка */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-dark);
+            line-height: 1.6;
+        }
+
+        /* Навигационное меню (остается сверху) */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(93, 64, 55, 0.4);
+        }
+
+        /* Главный экран (Hero Section) */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 5%;
+            background: linear-gradient(rgba(62, 39, 35, 0.8), rgba(93, 64, 55, 0.7)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        /* Секции общие стили */
+        section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+
+        /* Секция "О нас" */
+        .about-content {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Секция "Программы" */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .program-card {
+            background-color: var(--white);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(62, 39, 35, 0.15);
+            border-color: var(--primary-light);
+        }
+
+        .program-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Раскрывающееся описание (Details/Summary) */
+        details {
+            margin-top: 1rem;
+            background-color: var(--bg-color);
+            padding: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        summary {
+            font-weight: bold;
+            color: var(--primary-dark);
+            outline: none;
+            list-style-position: inside;
+        }
+        
+        details[open] summary {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        details p {
+            font-size: 0.95rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Секция "Стоимость" */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .price-card {
+            background-color: var(--accent);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .price-card:hover {
+            transform: scale(1.05);
+            background-color: var(--primary-light);
+            color: var(--white);
+        }
+
+        .price-card:hover h3, .price-card:hover .price {
+            color: var(--white);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin: 1rem 0;
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .price-card ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .price-card ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-dark);
+        }
+
+        /* Секция "Контакты" */
+        .contact-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-info h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Подвал и реквизиты */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--accent);
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 2rem;
+        }
+
+        .requisites {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--primary-light);
+            padding-top: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Для упрощения скрыто, в реальном проекте добавляется бургер-меню */
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигационное меню -->
+    <header>
+        <nav>
+            <a href="#" class="logo">Институт Психологии</a>
+            <ul class="nav-links">
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#programs">Программы</a></li>
+                <li><a href="#pricing">Стоимость</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero" id="home">
+        <h1>Познайте глубину человеческой психики</h1>
+        <p>Ваш профессиональный путь от индивидуального консультирования до организационной психологии международного уровня.</p>
+        <a href="#programs" class="btn">Выбрать программу</a>
+    </section>
+
+    <!-- Раздел истории компании -->
+    <section id="about">
+        <h2>История нашего Института</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Наш Институт психологии был основан группой практикующих специалистов в 2005 году с одной целью — создать академическую базу, которая объединяет классическую теорию и современные мировые практики.</p>
+                <p>Мы прошли путь от локального центра подготовки до института международного уровня. Сегодня наши выпускники успешно практикуют не только в своей стране, но и уверенно выходят на международные рынки, консультируя корпорации и частных клиентов по всему миру.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел обучающих программ -->
+    <section id="programs">
+        <h2>Обучающие программы</h2>
+        <div class="programs-grid">
+            
+            <!-- Карточка 1 -->
+            <div class="program-card">
+                <h3>Индивидуальная психология</h3>
+                <p>Базовый курс для тех, кто хочет начать частную практику и работать один на один с клиентами.</p>
+                <details>
+                    <summary>Раскрыть содержание</summary>
+                    <p>Программа включает: основы психоанализа, когнитивно-поведенческую терапию, этику психолога, супервизии и 100 часов практической отработки навыков.</p>
+                </details>
+            </div>
+
+            <!-- Карточка 2 -->
+            <div class="program-card">
+                <h3>Организационная психология</h3>
+                <p>Продвинутый курс для работы с корпоративным сектором, HR и бизнесом.</p>
+                <details>
+                    <summary>Раскрыть содержание</summary>
+                    <p>Программа включает: психологию лидерства, разрешение конфликтов в коллективе, мотивационный менеджмент, ассессмент и оценку персонала.</p>
+                </details>
+            </div>
+
+            <!-- Карточка 3 -->
+            <div class="program-card">
+                <h3>Международная практика</h3>
+                <p>Выход на глобальный рынок. Курс для опытных психологов, масштабирующих свою деятельность.</p>
+                <details>
+                    <summary>Раскрыть содержание</summary>
+                    <p>Программа включает: кросс-культурную психологию, легализацию дипломов, особенности консультирования экспатов и практику на английском языке.</p>
+                </details>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Раздел стоимости -->
+    <section id="pricing">
+        <h2>Стоимость программ</h2>
+        <div class="pricing-grid">
+            
+            <div class="price-card">
+                <h3>Базовый</h3>
+                <div class="price">45 000 ₽</div>
+                <ul>
+                    <li>Доступ к видеолекциям</li>
+                    <li>Индивидуальная психология</li>
+                    <li>Сертификат слушателя</li>
+                </ul>
+                <a href="#contact" class="btn">Оставить заявку</a>
+            </div>
+
+            <div class="price-card">
+                <h3>Профессионал</h3>
+                <div class="price">85 000 ₽</div>
+                <ul>
+                    <li>Все модули + Организационная</li>
+                    <li>Групповые супервизии</li>
+                    <li>Диплом о переподготовке</li>
+                </ul>
+                <a href="#contact" class="btn">Оставить заявку</a>
+            </div>
+
+            <div class="price-card">
+                <h3>Global (Международный)</h3>
+                <div class="price">150 000 ₽</div>
+                <ul>
+                    <li>Все программы Института</li>
+                    <li>Помощь в выходе на мир. рынок</li>
+                    <li>Личный ментор</li>
+                </ul>
+                <a href="#contact" class="btn">Оставить заявку</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Раздел контактов -->
+    <section id="contact">
+        <h2>Свяжитесь с нами</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Местоположение</h3>
+                <p>📍 г. Москва, ул. Академика Павлова, д. 12, офис 304</p>
+                <p>📞 +7 (495) 123-45-67</p>
+                <p>✉️ info@psy-institute.ru</p>
+            </div>
+            <div class="contact-info">
+                <h3>Часы работы</h3>
+                <p>Понедельник - Пятница: 10:00 - 20:00</p>
+                <p>Суббота: 11:00 - 16:00</p>
+                <p>Воскресенье: Выходной</p>
+                <br>
+                <a href="mailto:info@psy-institute.ru" class="btn">Написать нам</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал с реквизитами -->
+    <footer>
+        <h2>Институт Психологии</h2>
+        <p>Ваш надежный партнер в образовании и личностном росте.</p>
+        
+        <div class="requisites">
+            <p><strong>Реквизиты организации:</strong></p>
+            <p>ООО «Институт Практической Психологии» | ИНН: 7701234567 | ОГРН: 1027700123456</p>
+            <p>Юридический адрес: 101000, г. Москва, ул. Академика Павлова, д. 12.</p>
+            <p>&copy; 2026 Все права защищены.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
